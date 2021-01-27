@@ -29,7 +29,7 @@ yarn lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
-#RULES
+# RULES
 Criar uma pagina utilizando vue como framework para o front, fazer o backend em nodeJs e utilizar o banco de dados de sua preferencia, a comunicação entre a pagina e o banco deve ser estabelecida com API Rest.
 
 Estrutura banco de dados:  
