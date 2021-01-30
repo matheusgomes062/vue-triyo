@@ -5,5 +5,9 @@ module.exports = {
         prependData: `@import "@/styles/global.scss";`
       }
     }
-  }
+  },
+
+  transpileDependencies: [
+    'vuetify'
+  ]
 }

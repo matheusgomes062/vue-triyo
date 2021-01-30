@@ -1,11 +1,19 @@
 <template>
-  <div id="app">
-    <main class="main">
-      <transition mode="out-in">
-        <router-view />
-      </transition>
-    </main>
-  </div>
+  <v-app id="app">
+    <v-main class="grey lighten-2 d-flex justify-center"
+      ><router-view></router-view
+    ></v-main>
+  </v-app>
 </template>
 
-<style lang="scss"></style>
+<script>
+export default {
+  name: 'App',
+
+  components: {},
+
+  data: () => ({
+    //
+  })
+};
+</script>
