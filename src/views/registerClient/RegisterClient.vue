@@ -1,13 +1,9 @@
 <template>
-  <div class="d-flex align-center" style="height: 100vh;">
-    <v-card class="pa-md-6 mx-lg-auto align-center rounded-lg" width="600px">
-      <validation-observer ref="observer" v-slot="{ invalid }">
+  <div class="mainContent">
+    <v-card class="rounded-lg pa-4" width="600px">
+      <validation-observer ref="observer">
         <form @submit.prevent="submit">
-          <validation-provider
-            v-slot="{ errors }"
-            name="Name"
-            rules="required|max:10"
-          >
+          <validation-provider v-slot="{ errors }" name="Name" rules="required">
             <v-text-field
               v-model="name"
               :counter="10"
@@ -19,7 +15,7 @@
           <validation-provider
             v-slot="{ errors }"
             name="Address"
-            rules="required|max:30"
+            rules="required"
           >
             <v-text-field
               v-model="address"
@@ -65,13 +61,13 @@
             </v-btn>
             <v-divider class="my-4"></v-divider>
           </div>
-          <v-btn class="mr-4" @click="clear">
-            clear
-          </v-btn>
           <v-btn class="mr-4" type="submit" to="/">
             Voltar
           </v-btn>
-          <v-btn class="mr-4" type="submit" :disabled="invalid">
+          <v-btn class="mr-4" @click="clear">
+            clear
+          </v-btn>
+          <v-btn class="mr-4" type="submit" @click="register">
             Adicionar Cliente
           </v-btn>
         </form>
@@ -81,6 +77,7 @@
 </template>
 
 <script>
+import RegisterClientService from '@/services/RegisterClientService';
 import {
   extend,
   ValidationObserver,
@@ -120,7 +117,8 @@ export default {
     address: '',
     select: null,
     hasDependent: false,
-    dependents: 1
+    dependents: 1,
+    error: null
   }),
   methods: {
     submit() {
@@ -128,10 +126,21 @@ export default {
     },
     clear() {
       this.name = '';
+      this.address = '';
       this.phoneNumber = '';
-      this.email = '';
-      this.select = null;
+      this.hasDependent = false;
       this.$refs.observer.reset();
+    },
+    async register() {
+      try {
+        await RegisterClientService.registerClient({
+          name: this.name,
+          address: this.address,
+          phoneNumber: this.phoneNumber
+        });
+      } catch (error) {
+        this.error = error.response.data;
+      }
     }
   }
 };

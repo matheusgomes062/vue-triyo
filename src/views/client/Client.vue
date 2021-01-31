@@ -2,7 +2,7 @@
   <div class="mainContent">
     <v-data-table
       :headers="headers"
-      :items="users"
+      :items="clients"
       :items-per-page="5"
       class="elevation-3"
     >
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import GetClientsService from '@/services/GetClientsService';
 export default {
   name: 'client',
   data() {
@@ -22,39 +23,30 @@ export default {
       headers: [
         {
           text: 'Código',
-          value: 'clientID'
+          value: 'id'
         },
         {
           text: 'Nome',
-          value: 'clientName'
+          value: 'name'
         },
         {
           text: 'Endereço',
-          value: 'clientAddress'
+          value: 'address'
         },
         {
           text: 'Telefone',
-          value: 'clientPhoneNumber'
+          value: 'phoneNumber'
         },
         {
           text: 'Dependentes',
-          value: this.clientDependentsObject
+          value: 'dependents'
         }
       ],
-      clients: [
-        {
-          code: '1',
-          name: 'John',
-          address: 'Main Street',
-          phone: '202-555-0107'
-        }
-      ],
-      clientDependentsObject: {
-        dependentName: 'Gomes',
-        dependentAge: '22',
-        dependentType: 'Son'
-      }
+      clients: []
     };
+  },
+  async mounted() {
+    this.clients = (await GetClientsService.index()).data;
   }
 };
 </script>
